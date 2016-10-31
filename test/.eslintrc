@@ -1,0 +1,14 @@
+{
+    "env": {
+        "node": true,
+        "mocha": true
+    },
+    "rules": {
+        "brace-style": 0,
+        "no-unused-vars": 0
+    },
+    "globals": {
+        "Promise": true,
+        "define": true
+    }
+}
