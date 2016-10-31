@@ -19,17 +19,16 @@ const runWebpack = (config, callback) => {
     });
 };
 
-const getConfig = (dir, options) => {
+const getConfig = (entry, hintsOptions, filename = 'bundle.js', extraPlugins = []) => {
+    const plugins = [...extraPlugins, new PerfHintsPlugin(hintsOptions)]
+
     return {
-        entry: path.join(caseDir, dir, 'input.js'),
+        entry: entry,
         output: {
             path: distDir,
-            filename: 'bundle.js',
-            libraryTarget: 'umd'
+            filename: filename
         },
-        plugins: [
-            new PerfHintsPlugin(options)
-        ]
+        plugins: plugins
     }
 }
 
@@ -50,10 +49,27 @@ describe('perf-hints-plugin', () => {
         console.warn.restore();
     });
 
-    it('should provide hints if bundle size sizes max', (done) => {
-        const config = getConfig('monolith-bundle', {
-            maxBundleSize: 0.2 // specified in KB
+    it('should provide hints for huge monolith bundle', (done) => {
+        const config = getConfig(
+            path.join(caseDir, 'monolith-bundle', 'input.js'),
+            { maxBundleSize: 1 } // specified in KB
+        );
+        return runWebpack(config, (stats) => {
+            assert.equal(stats.hints.length, 1);
+            assert(console.warn.called);
+            done();
         });
+    });
+
+    it('should provide hints for bloated code splitting', (done) => {
+        const config = getConfig({
+            a: path.join(caseDir, 'bloated-code-split', 'a.js'),
+            b: path.join(caseDir, 'bloated-code-split', 'b.js')
+        },
+        { maxBundleSize: 2 } ,// specified in KB
+        '[name].js',
+        [ new webpack.optimize.CommonsChunkPlugin("common") ]
+        );
         return runWebpack(config, (stats) => {
             assert.equal(stats.hints.length, 1);
             assert(console.warn.called);

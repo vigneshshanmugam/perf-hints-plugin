@@ -4,10 +4,10 @@ const { getJSHints } = require('./hints');
 
 module.exports = class PerfHintsPlugin {
     constructor({
-        hintsFlag = true,
+        hints = true,
         maxBundleSize = 250
     }) {
-        this.hintsFlag = hintsFlag;
+        this.hintsFlag = hints;
         this.maxBundleSize = maxBundleSize;
     }
 
@@ -27,10 +27,13 @@ module.exports = class PerfHintsPlugin {
                 const jsFiles = files.filter(file => jsRegex.test(file));
                 const cssFiles = files.filter(file => cssRegex.test(file));
 
+                // Total Asset Size
+                let totalAssetSize = 0;
+
                 jsFiles.forEach((file) => {
                     const asset = compilation.assets[file];
-                    const assetSize = asset.source().length;
-                    const hints = getJSHints(jsFiles.length, assetSize, this.maxBundleSize);
+                    totalAssetSize += asset.source().length;
+                    const hints = getJSHints(totalAssetSize, this.maxBundleSize);
                     // Patch webpack stats Obj - For Testing Purpose only
                     stats.hints = hints;
                     console.warn(chalk.yellow(hints.join('')));

@@ -19,14 +19,13 @@ const isHugeBundle = (bundle, maxBundleSize) => {
     return false;
 }
 
-module.exports.getJSHints = (noOfFiles, bundleSize, maxBundleSize) => {
+module.exports.getJSHints = (bundleSize, maxBundleSize) => {
     let jsHints = [];
-    if (noOfFiles === 1 && isHugeBundle(bundleSize, maxBundleSize)) {
+    if (isHugeBundle(bundleSize, maxBundleSize)) {
         jsHints.push(`
             Tip: Instead of a single monolith bundle of size ${formatSize(bundleSize)}, use code-splitting in webpack to lazyload the modules. Learn more - https://webpack.github.io/docs/code-splitting.html
         `);
     }
-
     return jsHints;
 };
 
