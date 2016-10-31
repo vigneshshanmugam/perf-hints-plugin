@@ -2,7 +2,7 @@
 
 Webpack plugin that provides hints for Performance.
 
-Inspired from this [RFC](https://github.com/webpack/webpack/issues/3216).
+Attempt at providing warnings and errors while bundling JS/CSS in Webpack. Inspired from this [RFC](https://github.com/webpack/webpack/issues/3216).
 
 ## Install
 
