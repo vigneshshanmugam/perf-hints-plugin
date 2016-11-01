@@ -19,7 +19,7 @@ module.exports = {
   entry: //...,
   output: //...,
   plugins: [
-    new OptimizeJsPlugin({
+    new PerfHintsPlugin({
         hints: true,
         maxBundleSize: 200 // kB
     })
@@ -29,8 +29,8 @@ module.exports = {
 
 ### Options
 
-+ `hints` - Flag to Enable/Disable hints in the console
-+ `maxBundleSize` - for setting the performance budget. Expressed in kiloBytes.
++ `hints` - Flag to Enable/Disable hints in the console. Default is `false`
++ `maxBundleSize` - for setting the performance budget. Expressed in kiloBytes. Default value is `250kB`
 
 
 ### Features
