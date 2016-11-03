@@ -1,6 +1,6 @@
 {
   "name": "perf-hints-plugin",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Provide performance hints in webpack output",
   "main": "lib/index.js",
   "dependencies": {
