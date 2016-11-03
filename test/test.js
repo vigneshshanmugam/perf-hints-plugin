@@ -41,12 +41,12 @@ const getBundle = () => fs.readFileSync(path.join(distDir, 'bundle.js'), 'utf-8'
 describe('perf-hints-plugin', () => {
 
     beforeEach(() => {
-        sinon.stub(console, 'warn');
+        // sinon.stub(console, 'warn');
     });
 
     afterEach(() => {
         rimraf.sync(distDir);
-        console.warn.restore();
+        // console.warn.restore();
     });
 
     it('should provide hints for huge monolith bundle', (done) => {
@@ -55,6 +55,9 @@ describe('perf-hints-plugin', () => {
             { maxBundleSize: 1 } // specified in KB
         );
         return runWebpack(config, (stats) => {
+            console.log(stats.toString({
+                colors: true
+            }))
             assert.equal(stats.hints.length, 1);
             assert(console.warn.called);
             done();
@@ -71,6 +74,9 @@ describe('perf-hints-plugin', () => {
         [ new webpack.optimize.CommonsChunkPlugin("common") ]
         );
         return runWebpack(config, (stats) => {
+            console.log(stats.toString({
+                colors: true
+            }))
             assert.equal(stats.hints.length, 1);
             assert(console.warn.called);
             done();

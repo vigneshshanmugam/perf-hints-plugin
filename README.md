@@ -36,4 +36,7 @@ module.exports = {
 ### Features
 
 + Monolithic bundle size warnings.
+![monolith](https://github.com/vigneshshanmugam/perf-hints-plugin/blob/master/images/monolith.png)
+
 + Code splitted bundles exceed given max size.
+![code-split](https://github.com/vigneshshanmugam/perf-hints-plugin/blob/master/images/code-split.png)
