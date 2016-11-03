@@ -4,7 +4,6 @@
   "description": "Provide performance hints in webpack output",
   "main": "lib/index.js",
   "dependencies": {
-    "chalk": "^1.1.3"
   },
   "devDependencies": {
     "babel-cli": "^6.18.0",

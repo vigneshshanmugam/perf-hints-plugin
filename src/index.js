@@ -1,5 +1,4 @@
 'use strict';
-const chalk = require('chalk');
 const { getJSHints } = require('./hints');
 const CustomStats = require('./CustomStats');
 
@@ -38,9 +37,7 @@ module.exports = class PerfHintsPlugin {
                 if (jsRegex.test(file)) {
                     hints.push(...getJSHints(noOfAssets, assetSize, this.maxBundleSize));
                 }
-                // Patch webpack stats Obj - For Testing Purpose only
-                stats.hints = hints;
-                console.warn(chalk.yellow(hints.join('')));
+                compilation.warnings.push(...hints);
             });
 
         });
