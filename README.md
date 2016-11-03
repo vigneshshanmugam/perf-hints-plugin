@@ -1,4 +1,4 @@
-# optimize-js-plugin
+# perf-hints-plugin
 
 Webpack plugin that provides hints for Performance.
 
