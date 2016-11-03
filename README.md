@@ -35,4 +35,5 @@ module.exports = {
 
 ### Features
 
-+ Outputs Monolithic bundle size warnings.
++ Monolithic bundle size warnings.
++ Code splitted bundles exceed given max size.
