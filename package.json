@@ -17,7 +17,8 @@
   },
   "scripts": {
     "build": "babel src --out-dir lib",
-    "test": "npm run build && mocha --compilers js:babel-core/register",
+    "watch": "babel src --watch --out-dir lib",
+    "test": "mocha --compilers js:babel-core/register",
     "lint": "eslint src/ tests/",
     "prepublish": "npm run build"
   },

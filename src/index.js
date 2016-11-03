@@ -1,12 +1,13 @@
 'use strict';
 const chalk = require('chalk');
 const { getJSHints } = require('./hints');
+const CustomStats = require('./CustomStats');
 
 module.exports = class PerfHintsPlugin {
     constructor({
         hints = true,
         maxBundleSize = 250
-    }) {
+    } = {}) {
         this.hintsFlag = hints;
         this.maxBundleSize = maxBundleSize;
     }
@@ -16,29 +17,36 @@ module.exports = class PerfHintsPlugin {
             return;
         }
         const jsRegex = /\.js($|\?)/i;
-        const cssRegex = /\.css$/i;
+
+        // To tap the Stats Object which changes the output format.
+        compiler.plugin('after-emit', (compilation, callback) => {
+            compilation.getStats = () => {
+                return new CustomStats(compilation, this.maxBundleSize);
+            }
+            callback();
+        });
 
         compiler.plugin('done', (stats) => {
+
+            console.log(stats.toString({
+                colors: true
+            }));
+
             const compilation = stats.compilation;
+            const noOfAssets = Object.keys(compilation.assets).length;
 
-            compilation.chunks.forEach((chunk) => {
-                const files = [];
-                chunk.files.forEach(file => files.push(file));
-                const jsFiles = files.filter(file => jsRegex.test(file));
-                const cssFiles = files.filter(file => cssRegex.test(file));
-
-                // Total Asset Size
-                let totalAssetSize = 0;
-
-                jsFiles.forEach((file) => {
-                    const asset = compilation.assets[file];
-                    totalAssetSize += asset.source().length;
-                    const hints = getJSHints(totalAssetSize, this.maxBundleSize);
-                    // Patch webpack stats Obj - For Testing Purpose only
-                    stats.hints = hints;
-                    console.warn(chalk.yellow(hints.join('')));
-                })
+            Object.keys(compilation.assets).forEach((file) => {
+                const asset = compilation.assets[file];
+                const assetSize = asset.source().length;
+                let hints = [];
+                if (jsRegex.test(file)) {
+                    hints.push(...getJSHints(noOfAssets, assetSize, this.maxBundleSize));
+                }
+                // Patch webpack stats Obj - For Testing Purpose only
+                stats.hints = hints;
+                console.warn(chalk.yellow(hints.join('')));
             });
+
         });
     }
 

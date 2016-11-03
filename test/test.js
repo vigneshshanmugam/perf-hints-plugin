@@ -66,7 +66,7 @@ describe('perf-hints-plugin', () => {
             a: path.join(caseDir, 'bloated-code-split', 'a.js'),
             b: path.join(caseDir, 'bloated-code-split', 'b.js')
         },
-        { maxBundleSize: 2 } ,// specified in KB
+        { maxBundleSize: 2.5 } ,// specified in KB
         '[name].js',
         [ new webpack.optimize.CommonsChunkPlugin("common") ]
         );
