@@ -28,10 +28,6 @@ module.exports = class PerfHintsPlugin {
 
         compiler.plugin('done', (stats) => {
 
-            console.log(stats.toString({
-                colors: true
-            }));
-
             const compilation = stats.compilation;
             const noOfAssets = Object.keys(compilation.assets).length;
 
