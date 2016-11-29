@@ -1,5 +1,7 @@
 # perf-hints-plugin
 
+This Plugin will be deprecated once this PR is merged https://github.com/webpack/webpack/pull/3350
+
 Webpack plugin that provides hints for Performance.
 
 Attempt at providing warnings and errors while bundling JS/CSS in Webpack. Inspired from this [RFC](https://github.com/webpack/webpack/issues/3216).
