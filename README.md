@@ -1,6 +1,6 @@
 # perf-hints-plugin
 
-This Plugin will be deprecated once this PR is merged https://github.com/webpack/webpack/pull/3350
+DEPRECATED ❌❌ - Please use the [webpack performance feature](https://webpack.js.org/configuration/performance/)
 
 Webpack plugin that provides hints for Performance.
 
